@@ -1,0 +1,10 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Web Language
+*.xsl	 diff=astextplain
+*.css	 diff=astextplain
+
+# Windows File
+*.bat	 diff=astextplain encoding=cp932 eol=crlf
+*.vbs	 diff=astextplain encoding=cp932 eol=crlf
