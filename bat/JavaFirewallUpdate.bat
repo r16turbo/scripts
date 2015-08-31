@@ -6,7 +6,7 @@ net session > nul 2>&1
 if errorlevel 1 set ERR_MSG=Permission denied. & goto ERROR
 
 rem System Parameters
-set SYSTEM_32=C:\Windows\System32
+set SYSTEM=%ProgramData%\Oracle\Java\javapath
 
 rem JavaVM Parameters
 set JAVA_ROOT=C:\Program Files\Java
@@ -19,7 +19,7 @@ rem Delete firewall rules
 netsh advfirewall firewall delete rule name="%JAVA_NAME%"
 
 rem Setup System runtime
-call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%SYSTEM_32%" %JAVA_CMDS%
+call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%SYSTEM%" %JAVA_CMDS%
 
 rem Setup all Java runtime
 for /f %%V in ('dir /a:d /b "%JAVA_ROOT%"') do (
