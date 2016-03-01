@@ -5,26 +5,25 @@ rem Check Administrator Permission
 net session > nul 2>&1
 if errorlevel 1 set ERR_MSG=Permission denied. & goto ERROR
 
-rem Check PYTHONPATH
-if DEFINED PYTHONPATH goto SETUP
-where /q python
-if errorlevel 1 set ERR_MSG=PYTHONPATH not found. & goto ERROR
-for /F %%p IN ('where python') DO set PYTHON=%%p
-set PYTHONPATH=%PYTHON:~0,-11%
-:SETUP
-
 rem Python Parameters
-set PYTHON_ROOT=%PYTHONPATH%
-set PYTHON_CMDS=python pythonw
-
+set PYTHON_PATH=C:\opt\Python27
 set PYTHON_NAME=python
 set PYTHON_DESC=Python
+set PYTHON_CMDS=python pythonw
+
+rem Virtualenv Parameters
+set VENV_ROOT=C:\opt\venv
 
 rem Delete firewall rules
 netsh advfirewall firewall delete rule name="%PYTHON_NAME%"
 
-rem Setup all Python runtime
-call :addRuntime "%PYTHON_NAME%" "%PYTHON_DESC%" "%PYTHON_ROOT%" %PYTHON_CMDS%
+rem Setup Python runtime
+call :addRuntime "%PYTHON_NAME%" "%PYTHON_DESC%" "%PYTHON_PATH%" %PYTHON_CMDS%
+
+rem Setup all Virtualenv runtime
+for /f %%V in ('dir /a:d /b "%JAVA_ROOT%"') do (
+  call :addRuntime "%PYTHON_NAME%" "%PYTHON_DESC%" "%VENV_ROOT%\%%V\Scripts" %PYTHON_CMDS%
+)
 
 :ERROR
 if defined ERR_MSG echo %ERR_MSG%
