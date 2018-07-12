@@ -6,5 +6,5 @@
 *.css	 diff=astextplain
 
 # Windows File
-*.bat	 diff=astextplain encoding=cp932 eol=crlf
-*.vbs	 diff=astextplain encoding=cp932 eol=crlf
+*.bat	 diff=astextplain encoding=ms932 eol=crlf
+*.vbs	 diff=astextplain encoding=ms932 eol=crlf
