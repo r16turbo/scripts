@@ -8,20 +8,35 @@ if errorlevel 1 set ERR_MSG=Permission denied. & goto ERROR
 rem System Parameters
 set SYSTEM=%ProgramData%\Oracle\Java\javapath
 
-rem JavaVM Parameters
-set JAVA_ROOT=C:\Program Files\Java
-set JAVA_CMDS=java javaw jconsole
+rem Java Commands
+set JAVA_CMDS=java javaw jconsole jmc jp2launcher
 
+rem Oracle JavaVM Parameters
+set JAVA_ROOT=C:\Program Files\Java
 set JAVA_NAME=Java(TM) Platform SE binary
 set JAVA_DESC=Java(TM) Platform SE binary
 
-rem Delete firewall rules
+rem Delete Oracle firewall rules
 netsh advfirewall firewall delete rule name="%JAVA_NAME%"
 
-rem Setup System runtime
+rem Setup System Oracle runtime
 call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%SYSTEM%" %JAVA_CMDS%
 
-rem Setup all Java runtime
+rem Setup all Oracle runtime
+for /f %%V in ('dir /a:d /b "%JAVA_ROOT%"') do (
+  call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%JAVA_ROOT%\%%V\bin" %JAVA_CMDS%
+  call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%JAVA_ROOT%\%%V\jre\bin" %JAVA_CMDS%
+)
+
+rem OpenJDK JavaVM Parameters
+set JAVA_ROOT=C:\opt\Java
+set JAVA_NAME=OpenJDK Platform binary
+set JAVA_DESC=OpenJDK Platform binary
+
+rem Delete OpenJDK firewall rules
+netsh advfirewall firewall delete rule name="%JAVA_NAME%"
+
+rem Setup all OpenJDK runtime
 for /f %%V in ('dir /a:d /b "%JAVA_ROOT%"') do (
   call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%JAVA_ROOT%\%%V\bin" %JAVA_CMDS%
   call :addRuntime "%JAVA_NAME%" "%JAVA_DESC%" "%JAVA_ROOT%\%%V\jre\bin" %JAVA_CMDS%
