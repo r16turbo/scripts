@@ -21,7 +21,7 @@ rem Setup Python runtime
 call :addRuntime "%PYTHON_NAME%" "%PYTHON_DESC%" "%PYTHON_PATH%" %PYTHON_CMDS%
 
 rem Setup all Virtualenv runtime
-for /f %%V in ('dir /a:d /b "%JAVA_ROOT%"') do (
+for /f %%V in ('dir /a:d /b "%VENV_ROOT%"') do (
   call :addRuntime "%PYTHON_NAME%" "%PYTHON_DESC%" "%VENV_ROOT%\%%V\Scripts" %PYTHON_CMDS%
 )
 
