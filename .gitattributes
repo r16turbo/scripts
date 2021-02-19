@@ -1,10 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# Web Language
-*.xsl	 diff=astextplain
-*.css	 diff=astextplain
-
 # Windows File
-*.bat	 diff=astextplain encoding=ms932 eol=crlf
-*.vbs	 diff=astextplain encoding=ms932 eol=crlf
+*.bat	 text working-tree-encoding=CP932 eol=crlf
+*.vbs	 text working-tree-encoding=CP932 eol=crlf
